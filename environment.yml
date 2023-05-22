@@ -1,0 +1,24 @@
+name: styleres
+channels:
+  - pytorch
+  - anaconda
+  - defaults
+dependencies:
+  - pytorch=1.9.1 
+  - torchvision=0.10.1
+  - cudatoolkit=10.2
+  - pip
+  - pip:
+    - scikit-learn
+    - scipy
+    - opencv-python
+    - bs4
+    - requests
+    - lmdb
+    - tensorboard
+    - tqdm
+    - rich
+    - easydict
+    - torch_utils   
+
+    
