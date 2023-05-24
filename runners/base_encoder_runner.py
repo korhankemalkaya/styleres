@@ -93,7 +93,7 @@ class BaseEncoderRunner(BaseRunner):
         options = EasyDict()
 
         # Log real smiles and fake smiles
-        interface_options.dataset = r'/media/hdd2/adundar/hamza/genforce/data/temp/smile_with_original'
+        interface_options.dataset = r"/media/hdd2/adundar/hamza/genforce/data/temp/smile_with_original"
         interface_options.output = os.path.join(self.work_dir, 'logs', 'smile_3')
         interface_options.edit = "smile"
         interface_options.factor = 3        
@@ -101,14 +101,14 @@ class BaseEncoderRunner(BaseRunner):
         paths_smiles = [interface_options.dataset, interface_options.output]
 
         # Log real non-smiles and fake non-smiles
-        interfacem_options.dataset = r'/media/hdd2/adundar/hamza/genforce/data/temp/smile_without_original'
+        interfacem_options.dataset = r"/media/hdd2/adundar/hamza/genforce/data/temp/smile_without_original"
         interfacem_options.output = os.path.join(self.work_dir, 'logs', 'smile_minus_3')
         interfacem_options.edit = "smile"
         interfacem_options.factor = -3
         paths_non_smiles = [interfacem_options.dataset, interfacem_options.output]
         interfacem_options.method = "interfacegan"
         # Log real images and inverted images
-        options.dataset = r'/media/hdd2/adundar/hamza/genforce/data/temp/images256'
+        options.dataset = r"/media/hdd2/adundar/hamza/genforce/data/temp/images256"
         options.output = os.path.join(self.work_dir, 'logs', 'inversion')
         options.method = "inversion"
         paths_images = [options.dataset, options.output]
