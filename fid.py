@@ -95,9 +95,8 @@ if __name__ == '__main__':
     parser.add_argument('--img_size', type=int, default=256, help='image resolution')
     parser.add_argument('--batch_size', type=int, default=64, help='batch size to use')
     args = parser.parse_args()
-    fid_value, u_ids= calculate_fid_given_paths(args.paths, args.img_size, args.batch_size)
+    fid_value = calculate_fid_given_paths(args.paths, args.img_size, args.batch_size)
     print('FID: ', fid_value)
-    print("U-IDS", u_ids)
     #print("P-IDS", p_ids)
 
     

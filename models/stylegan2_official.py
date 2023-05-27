@@ -451,6 +451,21 @@ class DeformableConv2d(nn.Module):
                                           )
         return x
 
+class DeformResLayers(nn.Module):
+    def __init__(self, in_channels, out_channels, stride=1):
+        super().__init__()
+        if (in_channels == out_channels) and stride==1:
+            self.shortcut_layer = nn.Identity()
+        else:
+            self.shortcut_layer = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, (1, 1), stride, bias=False))
+        self.res_layer = nn.Sequential(
+            DeformableConv2d(in_channels, out_channels, (3, 3), (1, 1), 1, bias=True), nn.LeakyReLU(0.2),
+            DeformableConv2d(out_channels, out_channels, (3, 3), stride, 1, bias=True) )
+    def forward(self, x):
+        shortcut = self.shortcut_layer(x)
+        res = self.res_layer(x)
+        return res + shortcut
     
 class FeatureEdit(nn.Module):
     def __init__(self, in_channels, out_channels):
@@ -523,7 +538,7 @@ class GateNetwork(nn.Module):
         self.down1 = nn.Conv2d(in_channels, t_channel, kernel_size=3, padding=1, bias=True)
         self.down2 = nn.Conv2d(in_channels, t_channel, kernel_size=3, padding=1, bias=True)
         self.sigmoid = nn.Sigmoid()
-        self.convs = nn.Sequential(*[DeformableConv2d(in_channels,in_channels), DeformableConv2d(in_channels,out_channels), DeformableConv2d(out_channels,out_channels)])        
+        self.convs = nn.Sequential(*[DeformResLayers(in_channels,in_channels), DeformResLayers(in_channels,out_channels), DeformResLayers(out_channels,out_channels)])        
         self.convs2 = nn.Sequential(*[ResLayers(in_channels,in_channels,1), ResLayers(in_channels,out_channels,1), ResLayers(out_channels,1,1) ])
 
     def forward(self, generator_feats, y):
